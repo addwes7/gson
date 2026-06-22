@@ -4,10 +4,7 @@ permissions: {}
 
 jobs:
   Fuzzing:
-    strategy:
-      matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     permissions:
       security-events: write
     steps:

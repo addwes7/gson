@@ -21,6 +21,7 @@ jobs:
     strategy:
       matrix:
         java: [ 17, 21 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
         include:
           # Custom JDK 11 configuration because some of the plugins and test dependencies don't support it anymore,
           # but it is important to still test with a JDK version without Record classes
@@ -35,7 +36,6 @@ jobs:
             # https://github.com/Guardsquare/proguard/issues/481 and https://github.com/Guardsquare/proguard/issues/473
             # TODO: Once ProGuard supports JDK 25, also remove the corresponding 'JDK25' profile in `gson/pom.xml`
             extra-mvn-args: -Denforcer.fail=false --projects '!test-shrinker'
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -73,12 +73,12 @@ jobs:
     strategy:
       matrix:
         java: [ 21 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
         include:
           - java: 25
             # Disable Enforcer check which (intentionally) prevents using JDK 25 for building
             # TODO: Remove this once JDK 25 is fully supported for building Gson
             extra-mvn-args: -Denforcer.fail=false
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
     runs-on: ${{ matrix.os }}
 
     steps:
