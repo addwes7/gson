@@ -35,7 +35,8 @@ jobs:
             # https://github.com/Guardsquare/proguard/issues/481 and https://github.com/Guardsquare/proguard/issues/473
             # TODO: Once ProGuard supports JDK 25, also remove the corresponding 'JDK25' profile in `gson/pom.xml`
             extra-mvn-args: -Denforcer.fail=false --projects '!test-shrinker'
-    runs-on: ubuntu-latest
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
@@ -52,7 +53,10 @@ jobs:
   # Build a subset of the Gson API, see also https://github.com/google/gson/pull/2946
   build-gson-subset:
     name: Build Gson subset
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
       - name: Set up JDK
@@ -74,7 +78,8 @@ jobs:
             # Disable Enforcer check which (intentionally) prevents using JDK 25 for building
             # TODO: Remove this once JDK 25 is fully supported for building Gson
             extra-mvn-args: -Denforcer.fail=false
-    runs-on: ubuntu-latest
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
@@ -93,7 +98,10 @@ jobs:
 
   verify-reproducible-build:
     name: "Verify reproducible build"
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2

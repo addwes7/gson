@@ -2,7 +2,7 @@
 # to the public API of Gson
 name: Check API compatibility
 
-on: pull_request
+on: push
 permissions:
   contents: read #  to fetch code (actions/checkout)
 
@@ -12,7 +12,10 @@ env:
 
 jobs:
   check-api-compatibility:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
 
     # This setup tries to determine API incompatibility only for the changes introduced by the
     # pull request. It does this by first checking out the 'old' version and installing it into

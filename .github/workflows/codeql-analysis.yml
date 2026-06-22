@@ -4,7 +4,6 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
   schedule:
@@ -21,7 +20,7 @@ env:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     permissions:
       security-events: write
 
@@ -34,6 +33,7 @@ jobs:
         # GitHub Actions
         - language: actions
           build-mode: none
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
 
     steps:
     - name: Checkout repository

@@ -1,10 +1,13 @@
 name: CIFuzz
-on: [pull_request]
+on: push
 permissions: {}
 
 jobs:
   Fuzzing:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     permissions:
       security-events: write
     steps:
